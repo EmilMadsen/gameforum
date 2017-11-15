@@ -1,6 +1,6 @@
 <template>
 
-  <router-link :to="{ name: 'forums', params: { gameId : 1 }}">
+  <router-link :to="{ name: 'forums', params: { game : game }}">
     <div class="margin-bottom col-xs-6 col-sm-4 col-md-3 col-lg-2">
       <div class="img-wrapper">
           <img src="../../assets/404_boxart-285x380.jpg">
