@@ -5,6 +5,8 @@ import App from './App'
 import router from './router'
 import vueResource from 'vue-resource'
 
+require('font-awesome/css/font-awesome.css');
+
 require('../node_modules/bootstrap/less/bootstrap.less');
 
 Vue.use(vueResource);
