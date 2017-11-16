@@ -8,7 +8,7 @@
       <hr>
       <h4>Game Forums:</h4>
       <div class="row">
-        <forum-object v-for="game in games" :game="game" :key="game.id"></forum-object>
+        <game-object v-for="game in games" :game="game" :key="game.id"></game-object>
 
       </div>
     </div>
@@ -19,14 +19,14 @@
 <script>
 
 import GeneralForums from './general-forums.vue'
-import ForumObject from './forum-object.vue'
+import GameObject from './game-object.vue'
 
 
 export default {
 
   components: {
     'general-forums': GeneralForums,
-    'forum-object': ForumObject
+    'game-object': GameObject
   },
 
   data() {
@@ -43,7 +43,7 @@ export default {
         .then(function(response){
           var games = response.body;
           for (var i = 0; i < games.length; i++){
-              games[i].forumCount = Math.floor(Math.random() * 1000) + 1  ;
+              games[i].postCount = Math.floor(Math.random() * 1000) + 1  ;
           }
           this.games = games;
         });

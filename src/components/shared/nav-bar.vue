@@ -2,13 +2,11 @@
 
   <div class="topnav" id="myTopnav">
 
-    <router-link :to="{ name: 'games', }">Games</router-link>
+    <router-link :to="{ name: 'games',}">Games</router-link>
 
-    <router-link :to="{ name: 'profile', }">Profile</router-link>
+    <router-link :to="{ name: 'posts', params: { id: 1 }}">Top Posts</router-link>
 
-    <router-link :to="{ name: 'forums', }">Top Forums</router-link>
-
-    <router-link :to="{ name: 'posts', }">Top Posts</router-link>
+    <router-link :to="{ name: 'profile', params: { id: 1 }}">Profile</router-link>
 
   </div>
 

@@ -2,9 +2,9 @@
 
   <div>
 
-    <h4>Standard Forums:</h4>
+    <h4>Standard Posts:</h4>
     <div class="row">
-      <forum-object v-for="game in generalForums" :game="game" :key="game.id"></forum-object>
+      <game-object v-for="game in generalPosts" :game="game" :key="game.id"></game-object>
 
     </div>
 
@@ -14,23 +14,23 @@
 </template>
 <script>
 
-  import ForumObject from './forum-object.vue'
+  import GameObject from './game-object.vue'
 
   export default {
     components: {
-      'forum-object': ForumObject
+      'game-object': GameObject
     },
 
     data() {
 
       return {
-        generalForums: {
-          0:  {'id': 12224, 'title': 'General', 'forumCount': 12},
-          1:  {'id': 12312, 'title': 'Random', 'forumCount': 321},
-          2:  {'id': 32221, 'title': 'News', 'forumCount': 153},
-          3:  {'id': 32221, 'title': 'Hottest', 'forumCount': 113},
-          4:  {'id': 32221, 'title': 'Rising', 'forumCount': 1},
-          5:  {'id': 32221, 'title': 'Top Voted', 'forumCount': 0},
+        generalPosts: {
+          0:  {'id': 12224, 'title': 'General', "postCount": 12},
+          1:  {'id': 12312, 'title': 'Random', "postCount": 321},
+          2:  {'id': 32221, 'title': 'News', "postCount": 153},
+          3:  {'id': 32221, 'title': 'Hottest', "postCount": 113},
+          4:  {'id': 32221, 'title': 'Rising', "postCount": 1},
+          5:  {'id': 32221, 'title': 'Top Voted', "postCount": 0},
 
         }
       }

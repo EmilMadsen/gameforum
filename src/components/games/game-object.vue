@@ -1,13 +1,13 @@
 <template>
 
-  <router-link :to="{ name: 'forums', params: { game : game }}">
+  <router-link :to="{ name: 'posts', params: { id : game.id }}">
     <div class="margin-bottom col-xs-6 col-sm-4 col-md-3 col-lg-2">
       <div class="img-wrapper">
-          <img src="../../assets/404_boxart-285x380.jpg">
+          <img src="../../assets/Hearthstone-285x380.jpg">
       </div>
       <div class="forum-object-description">
         <span>{{ truncateLine(game.title, 20) }}</span> <br>
-        <span class="sub-text">{{ game.forumCount + ' ' + this.forumCountText }}</span>
+        <span class="sub-text">{{ game.postCount + ' ' + this.postCountText }}</span>
       </div>
     </div>
   </router-link>
@@ -36,10 +36,11 @@
     },
 
     computed : {
-      forumCountText()
+
+      postCountText()
       {
-        if(this.game.forumCount === 1) return 'forum';
-        return 'forums';
+        if(this.game.postCount === 1) return 'post';
+        return 'posts';
       }
     }
 
