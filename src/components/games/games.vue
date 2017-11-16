@@ -6,7 +6,7 @@
 
     <div class="clearfix">
       <hr>
-      <h4>Game Forums:</h4>
+      <h4>Games:</h4>
       <div class="row">
         <game-object v-for="game in games" :game="game" :key="game.id"></game-object>
 
@@ -43,7 +43,8 @@ export default {
         .then(function(response){
           var games = response.body;
           for (var i = 0; i < games.length; i++){
-              games[i].postCount = Math.floor(Math.random() * 1000) + 1  ;
+              games[i].postCount = Math.floor(Math.random() * 1000) + 1;
+              games[i].src = "Hearthstone-285x380.jpg";
           }
           this.games = games;
         });

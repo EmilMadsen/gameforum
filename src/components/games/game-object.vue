@@ -3,7 +3,7 @@
   <router-link :to="{ name: 'posts', params: { id : game.id }}">
     <div class="margin-bottom col-xs-6 col-sm-4 col-md-3 col-lg-2">
       <div class="img-wrapper">
-          <img src="../../assets/Hearthstone-285x380.jpg">
+          <img :src="imageSrc">
       </div>
       <div class="forum-object-description">
         <span>{{ truncateLine(game.title, 20) }}</span> <br>
@@ -27,6 +27,24 @@
       },
     },
 
+    computed : {
+
+      imageSrc()
+      {
+        var images = require.context('../../assets/', false, /\.jpg$/);
+
+        if (this.game.src == null) return images('./404_boxart-285x380.jpg');
+
+        return images('./' + this.game.src);
+      },
+
+      postCountText()
+      {
+        if(this.game.postCount === 1) return 'post';
+        return 'posts';
+      }
+    },
+
     methods:  {
       truncateLine(existingInput, length)
       {
@@ -34,15 +52,6 @@
         return existingInput.substring(0,length) + '..';
       },
     },
-
-    computed : {
-
-      postCountText()
-      {
-        if(this.game.postCount === 1) return 'post';
-        return 'posts';
-      }
-    }
 
   }
 </script>
@@ -60,7 +69,7 @@
 
 .img-wrapper {
   width: 140px;
-  height: 185px;
+  height: 186px;
   border: 1px solid grey;
 }
 
