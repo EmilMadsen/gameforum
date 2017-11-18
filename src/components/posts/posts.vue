@@ -17,34 +17,36 @@
 
     <div>
         <div v-for="post in posts" class="post-container row container">
+          <router-link :to="{ name: 'post', params: { id : post.id }}">
 
             <!-- ICON && TITLE -->
-            <div class="col-sm-3 column-content">
-                <!--<div class="font-style">-->
-                    <!--<i class="fa fa-tasks"></i>-->
-                <!--</div>-->
-                <div>
-                    <h4>Post Title</h4>
-                    <h6>{{ truncateLine(post.title, 35) }}</h6>
-                </div>
-            </div>
+              <div class="col-sm-3 column-content">
+                  <!--<div class="font-style">-->
+                      <!--<i class="fa fa-tasks"></i>-->
+                  <!--</div>-->
+                  <div>
+                      <h4>Post Title</h4>
+                      <h6>{{ truncateLine(post.title, 35) }}</h6>
+                  </div>
+              </div>
 
-            <!-- COMMENT COUNT -->
-            <div class="col-sm-3 column-content">
-              <span>222 comments</span> <br>
-              <span>created 22 days ago</span>
-            </div>
+              <!-- COMMENT COUNT -->
+              <div class="col-sm-3 column-content">
+                <span>222 comments</span> <br>
+                <span>created 22 days ago</span>
+              </div>
 
-            <!-- LATEST COMMENT -->
-            <div class="col-sm-3 column-content">
-              <span><b>latest comment by email@meme.com</b></span><br>
-              <span style="font-style: italic">{{truncateLine("Why is this game so bad? Back in my days games were not supposed to be bad right out of the box", 85) }}</span>
-            </div>
+              <!-- LATEST COMMENT -->
+              <div class="col-sm-3 column-content">
+                <span><b>latest comment by email@meme.com</b></span><br>
+                <span style="font-style: italic">{{truncateLine("Why is this game so bad? Back in my days games were not supposed to be bad right out of the box", 85) }}</span>
+              </div>
 
-            <!-- UP & DOWNVOTES -->
-            <div class="col-sm-3 column-content">
-              votes
-            </div>
+              <!-- UP & DOWNVOTES -->
+              <div class="col-sm-3 column-content">
+                votes
+              </div>
+          </router-link>
 
         </div>
     </div>
