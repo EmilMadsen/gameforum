@@ -1,6 +1,10 @@
 <template>
 
+
   <div class="container">
+
+    <nav-bar></nav-bar>
+
 
     <general-forums></general-forums>
 
@@ -18,13 +22,15 @@
 </template>
 <script>
 
-import GeneralForums from './general-forums.vue'
-import GameObject from './game-object.vue'
+  import NavBar from '../shared/nav-bar.vue'
+  import GeneralForums from './general-forums.vue'
+  import GameObject from './game-object.vue'
 
 
 export default {
 
   components: {
+    'nav-bar': NavBar,
     'general-forums': GeneralForums,
     'game-object': GameObject
   },
@@ -38,6 +44,9 @@ export default {
 
 
   created() {
+
+    console.log("TOKEN:");
+    console.log(localStorage.getItem("token"));
 
       this.$http.get('https://jsonplaceholder.typicode.com/posts')
         .then(function(response){

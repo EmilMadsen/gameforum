@@ -1,6 +1,10 @@
 <template>
 
   <div>
+
+    <nav-bar></nav-bar>
+
+
     <div class="post-title">
       {{capitalizeFirstLetter(game.title)}}
     </div>
@@ -56,7 +60,14 @@
 
 </template>
 <script>
+
+  import NavBar from '../shared/nav-bar.vue'
+
   export default {
+
+    components: {
+      'nav-bar': NavBar,
+    },
 
     data () {
       return {

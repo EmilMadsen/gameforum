@@ -1,6 +1,10 @@
 <template>
 
   <div>
+
+    <nav-bar></nav-bar>
+
+
     <h1>Profile Overview</h1>
 
     <h3><b>Username: </b> userbob_1337</h3>
@@ -22,8 +26,15 @@
 
 </template>
 <script>
+
+  import NavBar from '../shared/nav-bar.vue'
+
+
   export default {
-//    name: 'nav',
+
+    components: {
+      'nav-bar': NavBar,
+    },
 
     methods: {
 
