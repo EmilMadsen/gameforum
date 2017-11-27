@@ -10,7 +10,7 @@
     </div>
 
     <div class="post-description">
-       Game Description... Awesome!
+       {{ game.description }}
     </div>
 
 
@@ -93,21 +93,31 @@
 
     mounted() {
 
-      // load "game" from route params
-      this.$http.get('https://jsonplaceholder.typicode.com/posts/' + this.$route.params.id)
-        .then(function(response){
+      this.$http.get('http://localhost/gameforumApi/game?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+        .then(function (response) {
 
-          this.game = response.body;
+          this.game = response.body.game;
+          this.posts = response.body.posts;
+
+          console.log(response);
 
         });
 
-      // load posts - TODO: add game id to get its posts
-      this.$http.get('https://jsonplaceholder.typicode.com/posts')
-      .then(function(response){
-
-        this.posts = response.body;
-
-      });
+      // load "game" from route params
+//      this.$http.get('https://jsonplaceholder.typicode.com/posts/' + this.$route.params.id)
+//        .then(function(response){
+//
+//          this.game = response.body;
+//
+//        });
+//
+//      // load posts - TODO: add game id to get its posts
+//      this.$http.get('https://jsonplaceholder.typicode.com/posts')
+//      .then(function(response){
+//
+//        this.posts = response.body;
+//
+//      });
     }
   }
 </script>
