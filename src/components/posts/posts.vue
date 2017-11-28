@@ -23,17 +23,18 @@
 
     <div>
         <div v-for="post in posts" class="post-container row container">
-          <router-link :to="{ name: 'post', params: { id : post.id }}">
+          <div class="post-highligting">
+            <router-link :to="{ name: 'post', params: { id : post.id }}">
 
-            <!-- ICON && TITLE -->
+              <!-- ICON && TITLE -->
               <div class="col-sm-3 column-content">
-                  <!--<div class="font-style">-->
-                      <!--<i class="fa fa-tasks"></i>-->
-                  <!--</div>-->
-                  <div>
-                      <h4>{{ truncateLine(post.title, 35) }}</h4>
-                      <h6>{{ truncateLine(post.description, 35) }}</h6>
-                  </div>
+                <!--<div class="font-style">-->
+                <!--<i class="fa fa-tasks"></i>-->
+                <!--</div>-->
+                <div>
+                  <h4>{{ truncateLine(post.title, 35) }}</h4>
+                  <h6>{{ truncateLine(post.description, 35) }}</h6>
+                </div>
               </div>
 
               <!-- COMMENT COUNT -->
@@ -52,8 +53,8 @@
               <div class="col-sm-3 column-content">
                 votes
               </div>
-          </router-link>
-
+            </router-link>
+          </div>
         </div>
     </div>
 
@@ -146,6 +147,10 @@
   }
 </script>
 <style scoped>
+
+  .post-highligting {
+     height: 100%;
+  }
 
   h4 {
     margin-top: 3px;
