@@ -13,6 +13,8 @@
        {{ game.description }}
     </div>
 
+    <button :disabled="favoriteLoading" @click="toggleFavorite">{{buttonText}}</button>
+
 
     <br>
     <br>
@@ -29,14 +31,14 @@
                       <!--<i class="fa fa-tasks"></i>-->
                   <!--</div>-->
                   <div>
-                      <h4>Post Title</h4>
-                      <h6>{{ truncateLine(post.title, 35) }}</h6>
+                      <h4>{{ truncateLine(post.title, 35) }}</h4>
+                      <h6>{{ truncateLine(post.description, 35) }}</h6>
                   </div>
               </div>
 
               <!-- COMMENT COUNT -->
               <div class="col-sm-3 column-content">
-                <span>222 comments</span> <br>
+                <span>{{post.commentCount}} comments</span> <br>
                 <span>created 22 days ago</span>
               </div>
 
@@ -71,13 +73,49 @@
 
     data () {
       return {
+        favoriteLoading: false,
         posts: [],
         game: {},
 //        test: this.$route.params
       }
     },
 
+    computed: {
+
+        buttonText()
+        {
+            if(this.game.favorite == null) return 'Favorite';
+
+            if(this.game.favorite) return 'Un-Favorite';
+
+            return 'Favorite';
+        }
+    },
+
     methods: {
+
+      toggleFavorite()
+      {
+          // to disable button, while loading..
+          this.favoriteLoading = true;
+
+          if(this.game.favorite == null || !this.game.favorite)
+          {
+              this.game.favorite = true;
+              this.$http.get('http://localhost/gameforumApi/game/favorite?id=' + this.game.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+                .then(function (response) {
+                    this.favoriteLoading = false;
+                });
+          }
+          else
+          {
+              this.game.favorite = false;
+              this.$http.get('http://localhost/gameforumApi/game/unfavorite?id=' + this.game.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+                .then(function (response) {
+                    this.favoriteLoading = false;
+                });
+          }
+      },
 
       capitalizeFirstLetter(string) {
         if(!string) return '';
@@ -93,7 +131,8 @@
 
     mounted() {
 
-      this.$http.get('http://localhost/gameforumApi/game?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+      // Load specific game, with all its posts.
+      this.$http.get('http://localhost/gameforumApi/game/specific?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
         .then(function (response) {
 
           this.game = response.body.game;
@@ -103,21 +142,6 @@
 
         });
 
-      // load "game" from route params
-//      this.$http.get('https://jsonplaceholder.typicode.com/posts/' + this.$route.params.id)
-//        .then(function(response){
-//
-//          this.game = response.body;
-//
-//        });
-//
-//      // load posts - TODO: add game id to get its posts
-//      this.$http.get('https://jsonplaceholder.typicode.com/posts')
-//      .then(function(response){
-//
-//        this.posts = response.body;
-//
-//      });
     }
   }
 </script>

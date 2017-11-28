@@ -58,7 +58,7 @@ export default {
 //          this.games = games;
 //      });
 
-      this.$http.get('http://localhost/gameforumApi/game', {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+      this.$http.get('http://localhost/gameforumApi/game/frontpage', {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
         .then(function (response) {
 
           this.games = response.body.games;
