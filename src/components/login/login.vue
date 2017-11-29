@@ -146,7 +146,9 @@
   .login-screen {
     background-color: #FFF;
     padding: 20px;
-    border-radius: 5px
+    border-radius: 5px;
+    box-shadow: 6px 6px 4px #2b2b2b3d;
+
   }
 
   .app-title {
