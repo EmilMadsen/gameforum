@@ -37,4 +37,28 @@ hr {
   border-top: 1px solid #0a0a0a52;
 }
 
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 7px 17px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3f403f;
+  transition: 0.8s;
+  -webkit-transition: 0.8s;
+}
+
+.create-post-title {
+  width: 373px;
+  margin-bottom: 5px;
+}
+
 </style>

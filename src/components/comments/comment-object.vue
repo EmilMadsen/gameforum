@@ -12,7 +12,11 @@
 
     <!-- Upvote / Downvote -->
     <div class="col-sm-1 column-content">
-      votes..
+      <div class="vote-area">
+        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><br>
+        1332<br>
+        <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+      </div>
     </div>
   </div>
 
@@ -33,6 +37,14 @@
   }
 </script>
 <style>
+
+  .fa {
+    cursor: pointer;
+  }
+
+  .vote-area {
+    padding-top: 10px;
+  }
 
   .column-content {
     height: 80px;

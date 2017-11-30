@@ -20,8 +20,8 @@
 
     <button @click="toggleShowWriteComment">{{hideCommentButtonTxt}}</button><br><br>
     <div v-if="showWriteComment">
-      <textarea rows="4" cols="50" name="comment" placeholder="Enter comment here..."></textarea><br>
-      <button>Comment</button><br>
+      <textarea v-model="comment" rows="4" cols="50" name="comment" placeholder="Enter comment here..."></textarea><br>
+      <button  @click="postComment">Comment</button><br>
       <br>
     </div>
 
@@ -52,6 +52,7 @@
         post: {},
         showWriteComment: false,
         hideCommentButtonTxt: 'Write Comment',
+        comment: null,
 //        test: this.$route.params
       }
     },
@@ -62,7 +63,7 @@
       {
         this.showWriteComment = !this.showWriteComment;
         if (!this.showWriteComment) this.hideCommentButtonTxt = 'Write Comment';
-        else this.hideCommentButtonTxt = 'Hide Write Comment';
+        else this.hideCommentButtonTxt = 'Hide';
       },
 
       capitalizeFirstLetter(string) {
@@ -74,6 +75,23 @@
       {
         if (existingInput.length < length ) return existingInput;
         return existingInput.substring(0,length) + '..';
+      },
+
+      postComment()
+      {
+        this.$http.post('http://localhost/gameforumApi/comment/create', this.comment, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+          .then(function (response) {
+
+            console.log(response);
+
+            var tempCommentObject = {
+              id: 313,
+              body: this.comment,
+            }
+
+            this.comments.push(tempCommentObject);
+            this.comment = null;
+          });
       },
     },
 

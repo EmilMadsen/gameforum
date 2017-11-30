@@ -19,7 +19,7 @@
 
     <button @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
     <div v-if="showCreatePost">
-      <input placeholder="Post Title" v-model="postObject.title"/><br>
+      <input class="create-post-title" placeholder="Post Title" v-model="postObject.title"/><br>
       <textarea rows="4" cols="50" name="comment" placeholder="Enter post description here..." v-model="postObject.description"></textarea><br>
       <button @click="postPost">Post</button><br>
       <br>
@@ -28,12 +28,12 @@
     <h5 style="margin-left: 10px; font-style: italic">Posts:</h5>
 
     <div>
-        <div v-for="post in posts" class="post-container row container">
+        <div v-for="post in posts" class="post-container row">
           <div class="post-highligting">
             <router-link :to="{ name: 'post', params: { id : post.id }}">
 
               <!-- ICON && TITLE -->
-              <div class="col-sm-3 column-content">
+              <div class="col-sm-4 column-content">
                 <!--<div class="font-style">-->
                 <!--<i class="fa fa-tasks"></i>-->
                 <!--</div>-->
@@ -44,20 +44,24 @@
               </div>
 
               <!-- COMMENT COUNT -->
-              <div class="col-sm-3 column-content">
+              <div class="col-sm-2 column-content">
                 <span>{{post.commentCount}} comments</span> <br>
                 <span>created 22 days ago</span>
               </div>
 
               <!-- LATEST COMMENT -->
-              <div class="col-sm-3 column-content">
+              <div class="col-sm-5 column-content">
                 <span><b>latest comment by email@meme.com</b></span><br>
                 <span style="font-style: italic">{{truncateLine("Why is this game so bad? Back in my days games were not supposed to be bad right out of the box", 85) }}</span>
               </div>
 
               <!-- UP & DOWNVOTES -->
-              <div class="col-sm-3 column-content">
-                votes
+              <div class="col-sm-1 column-content">
+                <div class="post-vote-area">
+                  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><br>
+                  1332<br>
+                  <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                </div>
               </div>
             </router-link>
           </div>
@@ -111,7 +115,7 @@
       {
         this.showCreatePost = !this.showCreatePost;
         if (!this.showCreatePost) this.hidePostButtonTxt = 'Create Post';
-        else this.hidePostButtonTxt = 'Hide Create Post';
+        else this.hidePostButtonTxt = 'Hide';
       },
 
       isGame(id)
@@ -160,16 +164,19 @@
       {
         this.$http.post('http://localhost/gameforumApi/post/create', this.postObject, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
           .then(function (response) {
-          console.log(response);
-          var tempPostObject = {
-            commentCount: 0,
-            id: 313,
-            title: this.postObject.title,
-            description: this.postObject.description
-          }
-          this.posts.push(tempPostObject);
-          this.postObject.title = null;
-          this.postObject.description = null;
+
+            console.log(response);
+
+            var tempPostObject = {
+              commentCount: 0,
+              id: 313,
+              title: this.postObject.title,
+              description: this.postObject.description
+            }
+
+            this.posts.push(tempPostObject);
+            this.postObject.title = null;
+            this.postObject.description = null;
         });
       }
     },
@@ -200,6 +207,8 @@
 
   .post-highligting {
      height: 100%;
+    padding-top: 10px;
+    background-color: #2e2f2e;
   }
 
   h4 {
@@ -247,6 +256,10 @@
 
   .column-content span {
     font-size: 11px;
+  }
+
+  .post-vote-area {
+    padding-top: 3px;
   }
 
 
