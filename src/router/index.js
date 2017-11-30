@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Games from '@/components/games/games.vue'
 import Profile from '@/components/profile/profile.vue'
-import Posts from '@/components/posts/posts.vue'
-import Comments from '@/components/comments/comment.vue'
+import SpecificGame from '@/components/games/specific-game.vue'
+import SpecificPost from '@/components/posts/specific-post.vue'
 import Login from '@/components/login/login.vue';
 
 
@@ -35,13 +35,13 @@ export default new Router({
     {
       path: '/game/:id',
       name: 'game',
-      component: Posts
+      component: SpecificGame
     },
 
     {
       path: '/post/:id',
       name: 'post',
-      component: Comments
+      component: SpecificPost
     },
 
   ]

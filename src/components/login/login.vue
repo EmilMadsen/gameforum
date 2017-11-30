@@ -134,11 +134,7 @@
   *:focus {
     outline: none;
   }
-  body {
-    font-family: Arial;
-    background-color: #3498DB;
-    padding: 50px;
-  }
+
   .login {
     margin: 20px auto;
     width: 300px;

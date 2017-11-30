@@ -46,8 +46,8 @@ export default {
 
   created() {
 
-    console.log("TOKEN:");
-    console.log(localStorage.getItem("token"));
+//    console.log("TOKEN:");
+//    console.log(localStorage.getItem("token"));
 
 //      this.$http.get('https://jsonplaceholder.typicode.com/posts').then(function(response){
 //          var games = response.body;
@@ -64,7 +64,7 @@ export default {
           this.games = response.body.games;
           this.standardForums = response.body.standard;
 
-          console.log(response);
+//          console.log(response);
 
       });
 
@@ -74,5 +74,11 @@ export default {
 </script>
 
 <style>
+
+  body {
+    font-family: Arial;
+    background-color: #c3c3c352;
+    padding: 0px;
+  }
 
 </style>

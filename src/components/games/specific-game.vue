@@ -4,7 +4,6 @@
 
     <nav-bar></nav-bar>
 
-
     <div class="post-title">
       {{capitalizeFirstLetter(game.title)}}
     </div>
@@ -13,11 +12,18 @@
        {{ game.description }}
     </div>
 
-    <button :disabled="favoriteLoading" @click="toggleFavorite">{{buttonText}}</button>
-
+    <button v-if="isGame(game.id)" :disabled="favoriteLoading" @click="toggleFavorite">{{buttonText}}</button>
 
     <br>
     <br>
+
+    <button @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
+    <div v-if="showCreatePost">
+      <input placeholder="Post Title" v-model="postObject.title"/><br>
+      <textarea rows="4" cols="50" name="comment" placeholder="Enter post description here..." v-model="postObject.description"></textarea><br>
+      <button @click="postPost">Post</button><br>
+      <br>
+    </div>
 
     <h5 style="margin-left: 10px; font-style: italic">Posts:</h5>
 
@@ -77,6 +83,12 @@
         favoriteLoading: false,
         posts: [],
         game: {},
+        showCreatePost: false,
+        hidePostButtonTxt: 'Create Post',
+        postObject: {
+          title: null,
+          description: null
+        },
 //        test: this.$route.params
       }
     },
@@ -94,6 +106,21 @@
     },
 
     methods: {
+
+      toggleShowCreatePost()
+      {
+        this.showCreatePost = !this.showCreatePost;
+        if (!this.showCreatePost) this.hidePostButtonTxt = 'Create Post';
+        else this.hidePostButtonTxt = 'Hide Create Post';
+      },
+
+      isGame(id)
+      {
+          // logic to tell games and general-forums apart.
+          return true;
+//          if(id < 5) return true;
+//          return false;
+      },
 
       toggleFavorite()
       {
@@ -128,6 +155,23 @@
         if (existingInput.length < length ) return existingInput;
         return existingInput.substring(0,length) + '..';
       },
+
+      postPost()
+      {
+        this.$http.post('http://localhost/gameforumApi/post/create', this.postObject, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+          .then(function (response) {
+          console.log(response);
+          var tempPostObject = {
+            commentCount: 0,
+            id: 313,
+            title: this.postObject.title,
+            description: this.postObject.description
+          }
+          this.posts.push(tempPostObject);
+          this.postObject.title = null;
+          this.postObject.description = null;
+        });
+      }
     },
 
     mounted() {
@@ -139,14 +183,20 @@
           this.game = response.body.game;
           this.posts = response.body.posts;
 
-          console.log(response);
+//          console.log(response);
 
         });
 
     }
   }
 </script>
-<style scoped>
+<style>
+
+  body {
+    font-family: Arial;
+    background-color: #c3c3c352;
+    padding: 0px;
+  }
 
   .post-highligting {
      height: 100%;
@@ -167,7 +217,7 @@
     border: solid;
     padding: 10px;
     margin: 0 0 30px 10px;
-    border-width: 2px;
+    border-width: 1px;
   }
 
   .post-description {
@@ -176,7 +226,7 @@
     border: solid;
     padding: 10px;
     margin: 0 0 30px 10px;
-    border-width: 2px;
+    border-width: 1px;
   }
 
   .post-container {
@@ -191,9 +241,9 @@
     border-color: lightgray;
   }
 
-  .column-content {
-    margin-top: 14px;
-  }
+  /*.column-content {*/
+    /*margin-top: 14px;*/
+  /*}*/
 
   .column-content span {
     font-size: 11px;

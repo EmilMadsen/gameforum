@@ -26,4 +26,15 @@ export default {
   /*color: #2c3e50;*/
   /*margin: 0 200px;*/
 }
+
+body {
+  font-family: Arial;
+  background-color: #3c98e5;
+  padding: 50px;
+}
+
+hr {
+  border-top: 1px solid #0a0a0a52;
+}
+
 </style>

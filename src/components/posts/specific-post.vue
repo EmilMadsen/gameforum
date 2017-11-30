@@ -1,0 +1,169 @@
+<template>
+
+  <div>
+
+    <nav-bar></nav-bar>
+
+    <div class="post-title">
+      Post Title
+    </div>
+
+    <div class="post-description">
+      Post Description... Awesome!
+    </div>
+
+    <span class="span-info">Author: Bob squash</span><br>
+    <span class="span-info">Posted: 2017/11/09 14:23</span>
+
+    <br>
+    <br>
+
+    <button @click="toggleShowWriteComment">{{hideCommentButtonTxt}}</button><br><br>
+    <div v-if="showWriteComment">
+      <textarea rows="4" cols="50" name="comment" placeholder="Enter comment here..."></textarea><br>
+      <button>Comment</button><br>
+      <br>
+    </div>
+
+    <h5 style="margin-left: 10px; font-style: italic">Comments:</h5>
+    <div>
+      <comment-object class="post-container container" v-for="comment in comments" :comment="comment" :key="comment.id"></comment-object>
+    </div>
+
+
+  </div>
+
+</template>
+<script>
+
+  import NavBar from '../shared/nav-bar.vue'
+  import CommentObject from '../comments/comment-object.vue'
+
+  export default {
+
+    components: {
+      'nav-bar': NavBar,
+      'comment-object': CommentObject
+    },
+
+    data () {
+      return {
+        comments: [],
+        post: {},
+        showWriteComment: false,
+        hideCommentButtonTxt: 'Write Comment',
+//        test: this.$route.params
+      }
+    },
+
+    methods: {
+
+      toggleShowWriteComment()
+      {
+        this.showWriteComment = !this.showWriteComment;
+        if (!this.showWriteComment) this.hideCommentButtonTxt = 'Write Comment';
+        else this.hideCommentButtonTxt = 'Hide Write Comment';
+      },
+
+      capitalizeFirstLetter(string) {
+        if(!string) return '';
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      },
+
+      truncateLine(existingInput, length)
+      {
+        if (existingInput.length < length ) return existingInput;
+        return existingInput.substring(0,length) + '..';
+      },
+    },
+
+    mounted() {
+
+      // load specific "post" from route params
+      this.$http.get('https://jsonplaceholder.typicode.com/posts/' + 1)
+        .then(function(response){
+
+          this.post = response.body;
+
+        });
+//      // load specific "post" from route params
+//      this.$http.get('https://jsonplaceholder.typicode.com/posts/' + this.$route.params.id)
+//        .then(function(response){
+//
+//          this.post = response.body;
+//
+//        });
+
+      // load comments - TODO: add post id to get its comments
+      this.$http.get('https://jsonplaceholder.typicode.com/posts')
+        .then(function(response){
+
+          this.comments = response.body;
+
+        });
+    }
+  }
+</script>
+<style>
+
+  body {
+    font-family: Arial;
+    background-color: #c3c3c352;
+    padding: 0px;
+  }
+
+  h4 {
+    margin-top: 3px;
+  }
+
+  .font-style {
+    font-size: 32px;
+    color: lightgray;
+  }
+
+  .span-info {
+    font-size: 11px;
+    margin: 0 0 10px 20px;
+    font-style: italic;
+  }
+
+  .post-title {
+    display: inline-block;
+    font-size: 18px;
+    border: solid;
+    padding: 10px;
+    margin: 0 0 30px 10px;
+    border-width: 1px;
+  }
+
+  .post-description {
+    display: table;
+    font-size: 12px;
+    border: solid;
+    padding: 10px;
+    margin: 0 0 30px 10px;
+    border-width: 1px;
+  }
+
+  .post-container {
+    height: 90px;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: lightgray;
+  }
+  .post-container:first-child {
+    border-top: solid;
+    border-width: 1px;
+    border-color: lightgray;
+  }
+
+  /*.column-content {*/
+    /*margin-top: 14px;*/
+  /*}*/
+
+  .column-content span {
+    font-size: 11px;
+  }
+
+
+</style>
