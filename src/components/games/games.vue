@@ -23,7 +23,7 @@
 <script>
 
   import NavBar from '../shared/nav-bar.vue'
-  import GeneralForums from './general-forums.vue'
+  import GeneralForums from './standard-forums-container.vue'
   import GameObject from './game-object.vue'
 
 

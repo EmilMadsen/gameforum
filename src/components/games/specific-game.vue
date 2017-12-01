@@ -4,20 +4,29 @@
 
     <nav-bar></nav-bar>
 
-    <div class="post-title">
-      {{capitalizeFirstLetter(game.title)}}
+    <div v-if="(Number.isInteger(this.$route.params.id))">
+      <div class="post-title">
+        {{capitalizeFirstLetter(game.title)}}
+      </div>
+
+      <div class="post-description">
+        {{ game.description }}
+      </div>
+    </div>
+    <div v-else>
+        <h3>This is the {{this.$route.params.id}} forum.. Welcome!</h3>
+        <h4>This is a standard forum.</h4>
+        <h4>You can only post new content within the General or Random standard forums.</h4>
     </div>
 
-    <div class="post-description">
-       {{ game.description }}
-    </div>
 
-    <button v-if="isGame(game.id)" :disabled="favoriteLoading" @click="toggleFavorite">{{buttonText}}</button>
+
+    <button v-if="isGame" :disabled="favoriteLoading" @click="toggleFavorite">{{buttonText}}</button>
 
     <br>
     <br>
 
-    <button @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
+    <button v-if="showCreateButton" @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
     <div v-if="showCreatePost">
       <input class="create-post-title" placeholder="Post Title" v-model="postObject.title"/><br>
       <textarea rows="4" cols="50" name="comment" placeholder="Enter post description here..." v-model="postObject.description"></textarea><br>
@@ -106,24 +115,34 @@
             if(this.game.favorite) return 'Un-Favorite';
 
             return 'Favorite';
+        },
+
+        isGame()
+        {
+          return this.$route.params.id % 1 === 0;
+  //        console.log(Number.isInteger(this.$route.params.id));
+  //         if (Number.isInteger(this.$route.params.id)) return true;
+  //         return false;
+        },
+
+        showCreateButton()
+        {
+            if (this.isGame) return true;
+            return (this.$route.params.id === 'general' || this.$route.params.id === 'random')
         }
+
+
     },
 
     methods: {
+
+
 
       toggleShowCreatePost()
       {
         this.showCreatePost = !this.showCreatePost;
         if (!this.showCreatePost) this.hidePostButtonTxt = 'Create Post';
         else this.hidePostButtonTxt = 'Hide';
-      },
-
-      isGame(id)
-      {
-          // logic to tell games and general-forums apart.
-          return true;
-//          if(id < 5) return true;
-//          return false;
       },
 
       toggleFavorite()
@@ -183,18 +202,17 @@
 
     mounted() {
 
-      // Load specific game, with all its posts.
-      this.$http.get('http://localhost/gameforumApi/game/specific?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
-        .then(function (response) {
+        // Load specific game, with all its posts.
+        this.$http.get('http://localhost/gameforumApi/game/specific?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+          .then(function (response) {
 
-          this.game = response.body.game;
-          this.posts = response.body.posts;
+            if (this.$route.params.id % 1 === 0) this.game = response.body.game;
+            this.posts = response.body.posts;
 
 //          console.log(response);
+          });
+      }
 
-        });
-
-    }
   }
 </script>
 <style>
