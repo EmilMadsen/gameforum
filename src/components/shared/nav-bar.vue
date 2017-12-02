@@ -4,11 +4,9 @@
 
     <router-link :to="{ name: 'frontpage',}">Games</router-link>
 
-    <router-link :to="{ name: 'game', params: { id: 'general' }}">General</router-link>
+    <router-link :to="{ name: 'game', params: { id: 'newest' }}">Newest Posts</router-link>
 
-    <router-link :to="{ name: 'game', params: { id: 'random' }}">Random</router-link>
-
-    <router-link :to="{ name: 'game', params: { id: 'topvoted' }}">Top Posts</router-link>
+    <router-link :to="{ name: 'game', params: { id: 'topvoted' }}">Top Voted Posts</router-link>
 
     <router-link :to="{ name: 'profile', params: { id: 1 }}">Profile</router-link>
 

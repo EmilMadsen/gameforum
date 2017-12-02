@@ -4,19 +4,20 @@
 
     <nav-bar></nav-bar>
 
-    <div class="post-title">
-      Post Title
+    <div class="description-box">
+
+        <div class="post-title">
+          Post Title
+        </div><br><br>
+
+        <div class="post-description">
+          Post Description... Awesome!
+        </div><br>
+
+
+      <span class="span-info"><b>Author:</b> Bob squash -- <b>Posted:</b> 2017/11/09 14:23</span>
+
     </div>
-
-    <div class="post-description">
-      Post Description... Awesome!
-    </div>
-
-    <span class="span-info">Author: Bob squash</span><br>
-    <span class="span-info">Posted: 2017/11/09 14:23</span>
-
-    <br>
-    <br>
 
     <button :disabled="favoriteLoading" @click="toggleFavorite">{{favoriteButtonTxt}}</button>
 
@@ -175,24 +176,6 @@
     font-size: 11px;
     margin: 0 0 10px 20px;
     font-style: italic;
-  }
-
-  .post-title {
-    display: inline-block;
-    font-size: 18px;
-    border: solid;
-    padding: 10px;
-    margin: 0 0 30px 10px;
-    border-width: 1px;
-  }
-
-  .post-description {
-    display: table;
-    font-size: 12px;
-    border: solid;
-    padding: 10px;
-    margin: 0 0 30px 10px;
-    border-width: 1px;
   }
 
   .post-container {

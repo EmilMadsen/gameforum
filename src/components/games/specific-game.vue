@@ -4,33 +4,35 @@
 
     <nav-bar></nav-bar>
 
-    <div v-if="(Number.isInteger(this.$route.params.id))">
-      <div class="post-title">
-        {{capitalizeFirstLetter(game.title)}}
+    <div class="description-box">
+
+      <div v-if="isGame">
+        <div class="post-title">
+          {{capitalizeFirstLetter(game.title)}}
+        </div><br><br>
+
+        <div class="post-description">
+          {{ game.description }}
+        </div>
       </div>
 
-      <div class="post-description">
-        {{ game.description }}
+
+      <div v-else style="padding-left: 10px">
+          <h3>This is the {{this.$route.params.id}} forum.. Welcome!</h3>
+          <h4>This is a standard forum.</h4>
+          <h4>You can only post new content within the game forums.</h4>
       </div>
-    </div>
-    <div v-else>
-        <h3>This is the {{this.$route.params.id}} forum.. Welcome!</h3>
-        <h4>This is a standard forum.</h4>
-        <h4>You can only post new content within the General or Random standard forums.</h4>
+
     </div>
 
-    <button v-if="isGame" :disabled="favoriteLoading" @click="toggleFavorite">{{buttonText}}</button>
-
-    <br>
-    <br>
+    <button v-if="isGame" :disabled="favoriteLoading" @click="toggleFavorite">{{buttonText}}</button><br><br>
 
     <div v-if="showCreateButton">
       <button @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
       <div v-if="showCreatePost">
         <input class="create-post-title" placeholder="Post Title" v-model="postObject.title"/><br>
         <textarea rows="4" cols="50" name="comment" placeholder="Enter post description here..." v-model="postObject.description"></textarea><br>
-        <button @click="postPost">Post</button><br>
-        <br>
+        <button @click="postPost">Submit</button><br><br>
       </div>
     </div>
 
@@ -38,44 +40,7 @@
     <h5 style="margin-left: 10px; font-style: italic">Posts:</h5>
 
     <div>
-        <div v-for="post in posts" class="post-container row">
-          <div class="post-highligting">
-            <router-link :to="{ name: 'post', params: { id : post.id }}">
-
-              <!-- ICON && TITLE -->
-              <div class="col-sm-4 column-content">
-                <!--<div class="font-style">-->
-                <!--<i class="fa fa-tasks"></i>-->
-                <!--</div>-->
-                <div>
-                  <h4>{{ truncateLine(post.title, 35) }}</h4>
-                  <h6>{{ truncateLine(post.description, 35) }}</h6>
-                </div>
-              </div>
-
-              <!-- COMMENT COUNT -->
-              <div class="col-sm-2 column-content">
-                <span>{{post.commentCount}} comments</span> <br>
-                <span>created 22 days ago</span>
-              </div>
-
-              <!-- LATEST COMMENT -->
-              <div class="col-sm-5 column-content">
-                <span><b>latest comment by email@meme.com</b></span><br>
-                <span style="font-style: italic">{{truncateLine("Why is this game so bad? Back in my days games were not supposed to be bad right out of the box", 85) }}</span>
-              </div>
-
-              <!-- UP & DOWNVOTES -->
-              <div class="col-sm-1 column-content">
-                <div class="post-vote-area">
-                  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><br>
-                  1332<br>
-                  <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-                </div>
-              </div>
-            </router-link>
-          </div>
-        </div>
+        <post-object v-for="post in posts" :post="post" :key="post.id" class="post-container row"></post-object>
     </div>
 
 
@@ -85,11 +50,13 @@
 <script>
 
   import NavBar from '../shared/nav-bar.vue'
+  import PostObject from '../posts/post-object.vue';
 
   export default {
 
     components: {
       'nav-bar': NavBar,
+      'post-object' : PostObject,
     },
 
     data () {
@@ -109,32 +76,41 @@
 
     computed: {
 
-        buttonText()
-        {
+      imageSrc()
+      {
+        console.log("Got here");
+        var images = require.context('../../assets/', false, /\.jpg$/);
+
+        if (this.game.src == null) return images('./404_boxart-285x380.jpg');
+
+        return images('./' + this.game.src);
+      },
+
+      buttonText()
+      {
 //            if(this.game.favorite == null) return 'Favorite';
 
-            if(this.game.favorite) return 'Un-Favorite';
+          if(this.game.favorite) return 'Un-Favorite';
 
-            return 'Favorite';
-        },
+          return 'Favorite';
+      },
 
-        isGame()
-        {
-          return this.$route.params.id % 1 === 0;
-        },
+      isGame()
+      {
+        return this.$route.params.id % 1 === 0;
+      },
 
-        showCreateButton()
-        {
-            if (this.isGame) return true;
-            return (this.$route.params.id === 'general' || this.$route.params.id === 'random')
-        }
+      showCreateButton()
+      {
+          if (this.isGame) return true;
+          return false;
+//            return (this.$route.params.id === 'general' || this.$route.params.id === 'random')
+      }
 
 
     },
 
     methods: {
-
-
 
       toggleShowCreatePost()
       {
@@ -199,7 +175,7 @@
       }
     },
 
-    mounted() {
+    created() {
 
         // Load specific game, with all its posts.
         this.$http.get('http://localhost/gameforumApi/game/specific?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
@@ -235,11 +211,6 @@
     padding: 0px;
   }
 
-  .post-highligting {
-     height: 100%;
-    padding-top: 10px;
-    background-color: #2e2f2e;
-  }
 
   h4 {
     margin-top: 3px;
@@ -248,24 +219,6 @@
   .font-style {
     font-size: 32px;
     color: lightgray;
-  }
-
-  .post-title {
-    display: inline-block;
-    font-size: 18px;
-    border: solid;
-    padding: 10px;
-    margin: 0 0 30px 10px;
-    border-width: 1px;
-  }
-
-  .post-description {
-    display: table;
-    font-size: 12px;
-    border: solid;
-    padding: 10px;
-    margin: 0 0 30px 10px;
-    border-width: 1px;
   }
 
   .post-container {

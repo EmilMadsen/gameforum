@@ -67,17 +67,6 @@
   color: lightslategrey;
 }
 
-.img-wrapper {
-  width: 140px;
-  height: 186px;
-  border: 1px solid grey;
-}
-
-img {
-  width: 100%;
-  /*height: 100px;*/
-  /*object-fit: cover;*/
-}
 
 
 </style>

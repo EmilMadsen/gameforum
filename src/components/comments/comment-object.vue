@@ -1,7 +1,7 @@
 <template>
 
   <!-- TITLE & DESCRIPTION -->
-  <div class="row">
+  <div class="row post-highligting">
     <div class="col-sm-11 column-content">
       <div>
         <!--<h6>{{ truncateLine(comment.content, 35) }}</h6>-->

@@ -1,7 +1,8 @@
 <template>
   <div class="container" id="app">
-    <!--<img src="./assets/logo.png">-->
+
     <router-view/>
+
   </div>
 </template>
 
@@ -18,6 +19,51 @@ export default {
 </script>
 
 <style>
+
+.post-highligting {
+  background-color: #2e2f2e;
+  color: #337ab7;
+}
+
+.post-entry {
+  padding-top: 10px;
+  height: 100%;
+}
+
+.img-wrapper {
+  width: 140px;
+  height: 186px;
+  border: 1px solid grey;
+}
+img {
+  width: 100%;
+  /*height: 100px;*/
+  /*object-fit: cover;*/
+}
+
+.description-box {
+  border: solid;
+  border-color: darkgray;
+  border-width: 1px;
+  padding: 10px 10px;
+}
+
+.post-title {
+  display: inline-block;
+  font-size: 18px;
+  border: solid;
+  padding: 10px;
+    border-width: 1px;
+}
+
+.post-description {
+  display: table;
+  font-size: 12px;
+  border: solid;
+  padding: 10px;
+  border-width: 1px;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

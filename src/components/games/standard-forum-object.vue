@@ -1,15 +1,30 @@
 <template>
 
-  <router-link :to="{ name: 'game', params: { id : forum.type }}">
-    <div class="margin-bottom col-xs-6 col-sm-4 col-md-3 col-lg-2">
-      <div class="img-wrapper">
-        <img :src="imageSrc">
+  <div>
+    <div v-if="isActivated(forum.type)">
+    <router-link :to="{ name: 'game', params: { id : forum.type }}">
+      <div class="margin-bottom col-xs-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="img-wrapper">
+          <img :src="imageSrc">
+        </div>
+        <div class="forum-object-description">
+          <span>{{ forum.title }}</span> <br>
+        </div>
       </div>
-      <div class="forum-object-description">
-        <span>{{ forum.title }}</span> <br>
+    </router-link>
+    </div>
+    <div v-else>
+      <div class="margin-bottom col-xs-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="img-wrapper-greyed">
+          <img :src="imageSrc">
+        </div>
+        <div class="forum-object-description">
+          <span style="text-decoration: line-through">{{ forum.title }}</span> <br>
+        </div>
       </div>
     </div>
-  </router-link>
+  </div>
+
 
 
 </template>
@@ -39,6 +54,14 @@
 
     },
 
+    methods: {
+
+        isActivated(type)
+        {
+            return (type === "news" || type === "topvoted");
+        },
+    },
+
   }
 </script>
 <style>
@@ -57,6 +80,15 @@
     width: 140px;
     height: 186px;
     border: 1px solid grey;
+  }
+
+  .img-wrapper-greyed {
+    width: 140px;
+    height: 186px;
+    border: 1px solid grey;
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* msie */
+    background-color: #000;
   }
 
   img {
