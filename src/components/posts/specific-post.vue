@@ -18,6 +18,11 @@
     <br>
     <br>
 
+    <button :disabled="favoriteLoading" @click="toggleFavorite">{{favoriteButtonTxt}}</button>
+
+    <br>
+    <br>
+
     <button @click="toggleShowWriteComment">{{hideCommentButtonTxt}}</button><br><br>
     <div v-if="showWriteComment">
       <textarea v-model="comment" rows="4" cols="50" name="comment" placeholder="Enter comment here..."></textarea><br>
@@ -48,14 +53,16 @@
 
     data () {
       return {
+        favoriteLoading: false,
         comments: [],
         post: {},
         showWriteComment: false,
         hideCommentButtonTxt: 'Write Comment',
+        favoriteButtonTxt: "Favorite",
         comment: null,
-//        test: this.$route.params
       }
     },
+
 
     methods: {
 
@@ -75,6 +82,31 @@
       {
         if (existingInput.length < length ) return existingInput;
         return existingInput.substring(0,length) + '..';
+      },
+
+      toggleFavorite()
+      {
+        // to disable button, while loading..
+        this.favoriteLoading = true;
+
+        if(this.post.favorite == null || !this.post.favorite)
+        {
+          this.post.favorite = true;
+          this.$http.get('http://localhost/gameforumApi/post/favorite?id=' + this.post.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+            .then(function (response) {
+              this.favoriteLoading = false;
+              this.favoriteButtonTxt = 'Un-Favorite';
+            });
+        }
+        else
+        {
+          this.post.favorite = false;
+          this.$http.get('http://localhost/gameforumApi/post/unfavorite?id=' + this.post.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+            .then(function (response) {
+              this.favoriteLoading = false;
+              this.favoriteButtonTxt = 'Favorite';
+            });
+        }
       },
 
       postComment()

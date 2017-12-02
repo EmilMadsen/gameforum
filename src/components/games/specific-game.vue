@@ -19,20 +19,21 @@
         <h4>You can only post new content within the General or Random standard forums.</h4>
     </div>
 
-
-
     <button v-if="isGame" :disabled="favoriteLoading" @click="toggleFavorite">{{buttonText}}</button>
 
     <br>
     <br>
 
-    <button v-if="showCreateButton" @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
-    <div v-if="showCreatePost">
-      <input class="create-post-title" placeholder="Post Title" v-model="postObject.title"/><br>
-      <textarea rows="4" cols="50" name="comment" placeholder="Enter post description here..." v-model="postObject.description"></textarea><br>
-      <button @click="postPost">Post</button><br>
-      <br>
+    <div v-if="showCreateButton">
+      <button @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
+      <div v-if="showCreatePost">
+        <input class="create-post-title" placeholder="Post Title" v-model="postObject.title"/><br>
+        <textarea rows="4" cols="50" name="comment" placeholder="Enter post description here..." v-model="postObject.description"></textarea><br>
+        <button @click="postPost">Post</button><br>
+        <br>
+      </div>
     </div>
+
 
     <h5 style="margin-left: 10px; font-style: italic">Posts:</h5>
 
@@ -110,7 +111,7 @@
 
         buttonText()
         {
-            if(this.game.favorite == null) return 'Favorite';
+//            if(this.game.favorite == null) return 'Favorite';
 
             if(this.game.favorite) return 'Un-Favorite';
 
@@ -120,9 +121,6 @@
         isGame()
         {
           return this.$route.params.id % 1 === 0;
-  //        console.log(Number.isInteger(this.$route.params.id));
-  //         if (Number.isInteger(this.$route.params.id)) return true;
-  //         return false;
         },
 
         showCreateButton()
@@ -166,6 +164,7 @@
                     this.favoriteLoading = false;
                 });
           }
+          this.$forceUpdate();
       },
 
       capitalizeFirstLetter(string) {
@@ -216,6 +215,19 @@
   }
 </script>
 <style>
+
+  input {
+     text-align: left;
+     background-color: #ffffff;
+     border: 1px solid darkgray;
+    border-radius: 0px;
+    font-size: 14px;
+    font-weight: 100;
+    padding: 2px;
+    width: 250px;
+    -webkit-transition: border .5s;
+    transition: border .5s;
+  }
 
   body {
     font-family: Arial;

@@ -29,7 +29,7 @@
     <div class="clearfix"></div>
     <hr>
 
-    <h3>Posts:</h3>
+    <h3>Favorite Posts:</h3>
     <span v-if="user.posts.length < 1">No posts yet...</span>
 
     <div class="clearfix"></div>
