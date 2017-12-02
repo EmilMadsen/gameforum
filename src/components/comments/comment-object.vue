@@ -12,9 +12,9 @@
 
     <!-- Upvote / Downvote -->
     <div class="col-sm-1 column-content">
-      <div class="vote-area">
+      <div class="vote-area center-text">
         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><br>
-        1332<br>
+        1337<br>
         <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
       </div>
     </div>
@@ -40,10 +40,6 @@
 
   .fa {
     cursor: pointer;
-  }
-
-  .vote-area {
-    padding-top: 10px;
   }
 
   .column-content {

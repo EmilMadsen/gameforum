@@ -107,4 +107,21 @@ button:hover {
   margin-bottom: 5px;
 }
 
+.fa
+{
+  font-size: 15px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.post-vote-area {
+  padding-top: 3px;
+}
+
+.vote-area {
+  padding-top: 10px;
+}
+
 </style>

@@ -241,9 +241,5 @@
     font-size: 11px;
   }
 
-  .post-vote-area {
-    padding-top: 3px;
-  }
-
 
 </style>

@@ -29,9 +29,9 @@
       <!-- UP & DOWNVOTES -->
       <div class="col-sm-1 column-content">
         <div class="post-vote-area">
-          <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><br>
+          <i v-on:click.prevent="upvote()" class="fa fa-thumbs-o-up" aria-hidden="true"></i><br>
           1332<br>
-          <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+          <i @click="downvote()" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
         </div>
       </div>
     </router-link>
@@ -53,12 +53,23 @@
 
     methods: {
 
+      upvote()
+      {
+        console.log("VOTED");
+
+      },
+
+      downvote()
+      {
+          console.log("VOTED");
+      },
+
       truncateLine(existingInput, length)
       {
         if (existingInput.length < length ) return existingInput;
         return existingInput.substring(0,length) + '..';
       },
-      
+
     }
 
   }
@@ -67,10 +78,6 @@
 
   .fa {
     cursor: pointer;
-  }
-
-  .vote-area {
-    padding-top: 10px;
   }
 
   .column-content {
