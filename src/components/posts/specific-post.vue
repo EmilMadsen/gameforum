@@ -20,7 +20,7 @@
 
     </div>
 
-    <button :disabled="favoriteLoading" @click="toggleFavorite">{{favoriteButtonTxt}}</button>
+    <button :disabled="favoriteLoading" @click="toggleFavorite">{{favoriteButtonText}}</button>
 
     <br>
     <br>
@@ -33,8 +33,11 @@
     </div>
 
     <h5 style="margin-left: 10px; font-style: italic">Comments:</h5>
-    <div>
+    <div v-if="comments.length > 0">
       <comment-object class="post-container container" v-for="comment in comments" :comment="comment" :key="comment.id"></comment-object>
+    </div>
+    <div v-else>
+      ...No comments yet
     </div>
 
 
@@ -60,9 +63,19 @@
         post: {},
         showWriteComment: false,
         hideCommentButtonTxt: 'Write Comment',
-        favoriteButtonTxt: "Favorite",
         comment: null,
       }
+    },
+
+    computed: {
+
+      favoriteButtonText()
+      {
+        if(this.post.favorite == "1") return 'Un-Favorite';
+
+        return 'Favorite';
+      },
+
     },
 
 
@@ -91,13 +104,13 @@
         // to disable button, while loading..
         this.favoriteLoading = true;
 
-        if(this.post.favorite == null || !this.post.favorite)
+        if(this.post.favorite == "0")
         {
           this.post.favorite = true;
           this.$http.get('http://localhost/gameforumApi/post/favorite?id=' + this.post.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
             .then(function (response) {
               this.favoriteLoading = false;
-              this.favoriteButtonTxt = 'Un-Favorite';
+              this.post.favorite = "1";
             });
         }
         else
@@ -106,7 +119,7 @@
           this.$http.get('http://localhost/gameforumApi/post/unfavorite?id=' + this.post.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
             .then(function (response) {
               this.favoriteLoading = false;
-              this.favoriteButtonTxt = 'Favorite';
+              this.post.favorite = "0";
             });
         }
       },

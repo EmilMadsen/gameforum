@@ -30,7 +30,7 @@
 
     </div>
 
-    <button v-if="isGame" :disabled="favoriteLoading" @click="toggleFavorite">{{buttonText}}</button><br><br>
+    <button v-if="isGame" :disabled="favoriteLoading" @click="toggleFavorite">{{favoriteButtonText}}</button><br><br>
 
     <div v-if="showCreateButton">
       <button @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
@@ -90,11 +90,9 @@
         return images('./' + this.game.src);
       },
 
-      buttonText()
+      favoriteButtonText()
       {
-//            if(this.game.favorite == null) return 'Favorite';
-
-          if(this.game.favorite) return 'Un-Favorite';
+          if(this.game.favorite == "1") return 'Un-Favorite';
 
           return 'Favorite';
       },
@@ -130,23 +128,25 @@
 
       toggleFavorite()
       {
+        console.log("t");
           // to disable button, while loading..
           this.favoriteLoading = true;
 
-          if(this.game.favorite == null || !this.game.favorite)
+          if(this.game.favorite == "0")
           {
-              this.game.favorite = true;
+            console.log("About to favorite..");
               this.$http.get('http://localhost/gameforumApi/game/favorite?id=' + this.game.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
                 .then(function (response) {
-                    this.favoriteLoading = false;
+                  this.game.favorite = "1";
+                  this.favoriteLoading = false;
                 });
           }
           else
           {
-              this.game.favorite = false;
-              this.$http.get('http://localhost/gameforumApi/game/unfavorite?id=' + this.game.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+            this.$http.get('http://localhost/gameforumApi/game/unfavorite?id=' + this.game.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
                 .then(function (response) {
-                    this.favoriteLoading = false;
+                  this.game.favorite = "0";
+                  this.favoriteLoading = false;
                 });
           }
           this.$forceUpdate();
