@@ -33,9 +33,9 @@
       {
         var images = require.context('../../assets/', false, /\.jpg$/);
 
-        if (this.game.src == null) return images('./404_boxart-285x380.jpg');
+        if (this.game.picture_filepath == null) return images('./404_boxart-285x380.jpg');
 
-        return images('./' + this.game.src);
+        return images('./' + this.game.picture_filepath);
       },
 
       postCountText()
