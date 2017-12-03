@@ -240,25 +240,11 @@
     color: lightgray;
   }
 
-  .post-container {
-    height: 90px;
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: lightgray;
-  }
-  .post-container:first-child {
-    border-top: solid;
-    border-width: 1px;
-    border-color: lightgray;
-  }
-
   /*.column-content {*/
     /*margin-top: 14px;*/
   /*}*/
 
-  .column-content span {
-    font-size: 11px;
-  }
+
 
 
 </style>

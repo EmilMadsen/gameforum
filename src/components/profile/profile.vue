@@ -8,36 +8,36 @@
     <h1>Profile Overview</h1>
 
     <h3><b>Username: </b> {{user.username}}</h3>
-    <h4><b>User since: </b> {{user.created_at}}</h4>
-    <h5><b>Total Post voted:</b> {{user.total_post_votes}} </h5>
-    <h5><b>Total Comments voted:</b> {{user.total_comments_votes}} </h5>
+    <h4><b>User since: </b> {{user.created_date}}</h4>
+    <h5><b>Total Post voted:</b> {{user.post_vote_count}} </h5>
+    <h5><b>Total Comments voted:</b> {{user.comment_vote_count}} </h5>
 
 
     <hr>
 
-    <h3>Favorite Games:</h3>
+    <h3>Your Favorite Games:</h3>
     <div class="gameobject-container"></div>
-      <game-object v-for="game in user.favorite_games" :game="game" :key="game.id"></game-object>
+        <span v-if="user.favorite_games.length < 1">No favorite posts yet...</span>
+        <game-object v-else v-for="game in user.favorite_games" :game="game" :key="game.id"></game-object>
     <br>
 
     <div class="clearfix"></div>
     <hr>
 
-    <h3>Favorite Game Companies:</h3>
-    <span v-if="user.favorite_game_companies.length < 1">No favorite game companies yet...</span>
+    <h3>Your Favorite Posts:</h3>
+    <span v-if="user.favorite_posts.length < 1">No favorite posts yet...</span>
+    <div v-else>
+      <post-object class="post-container row" v-for="post in user.favorite_posts" :post="post" :key="post.id"></post-object>
+    </div>
 
     <div class="clearfix"></div>
     <hr>
 
-    <h3>Favorite Posts:</h3>
-    <span v-if="user.posts.length < 1">No posts yet...</span>
-
-    <div class="clearfix"></div>
-    <hr>
-
-    <h3>Comments:</h3>
-    <span v-if="user.posts.length < 1">No comments yet...</span>
-
+    <h3>Your Comments:</h3>
+    <span v-if="user.comments.length < 1">No comments yet...</span>
+    <div v-else >
+      <comment-object class="post-container container" v-for="comment in user.comments" :comment="comment" :key="comment.id"></comment-object>
+    </div>
 
     <div class="clearfix"></div>
     <hr>
@@ -50,6 +50,8 @@
 
   import NavBar from '../shared/nav-bar.vue'
   import GameObject from '../games/game-object.vue'
+  import PostObject from '../posts/post-object.vue'
+  import CommentObject from '../comments/comment-object.vue'
 
 
   export default {
@@ -58,8 +60,7 @@
       return {
         user: {
           favorite_games: [],
-          favorite_game_companies: [],
-          posts: [],
+          favorite_posts: [],
           comments: [],
         },
       }
@@ -67,27 +68,9 @@
 
     components: {
       'nav-bar': NavBar,
-      'game-object': GameObject
-
-    },
-
-    methods: {
-
-//      // Dummy method to be removed?
-//      calculateDay() {
-//        var today = new Date();
-//        var dd = today.getDate();
-//        var mm = today.getMonth()+1; //January is 0!
-//
-//        var yyyy = today.getFullYear();
-//        if(dd<10){
-//          dd='0'+dd;
-//        }
-//        if(mm<10){
-//          mm='0'+mm;
-//        }
-//        return dd+'/'+mm+'/'+yyyy;
-//      }
+      'game-object': GameObject,
+      'post-object': PostObject,
+      'comment-object': CommentObject
     },
 
     mounted() {

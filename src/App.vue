@@ -23,6 +23,22 @@ export default {
 
 <style>
 
+  .column-content span {
+    font-size: 11px;
+  }
+
+  .post-container {
+    height: 90px;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: lightgray;
+  }
+  .post-container:first-child {
+    border-top: solid;
+    border-width: 1px;
+    border-color: lightgray;
+  }
+
 .post-highligting {
   background-color: #2e2f2e;
   color: #337ab7;

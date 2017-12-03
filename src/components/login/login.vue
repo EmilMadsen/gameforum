@@ -85,11 +85,13 @@
             this.$router.push('frontpage');
           }
           else {
-            alert(response.body.message);
+            console.log(response);
+            alert(response);
           }
 
         }).catch(function (response) {
-          alert(response.body.message);
+          console.log(response);
+          alert(response);
         });
 
       },
@@ -105,11 +107,13 @@
             this.$router.push('frontpage');
           }
           else {
-            alert(response.body.message);
+            console.log(response);
+            alert(response);
           }
 
         }).catch(function (response) {
-          alert(response.body.message);
+          console.log(response);
+          alert(response);
         });
       },
 
