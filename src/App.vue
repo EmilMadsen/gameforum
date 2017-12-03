@@ -1,6 +1,9 @@
 <template>
   <div class="container" id="app">
 
+    <!-- to prevent favicon warning in browser.. -->
+    <link rel="shortcut icon" href="">
+
     <router-view/>
 
   </div>
@@ -75,8 +78,8 @@ img {
 
 body {
   font-family: Arial;
-  background-color: #3c98e5;
-  padding: 50px;
+  background-color: #c3c3c352;
+  /*padding: 50px;*/
 }
 
 hr {
@@ -122,6 +125,11 @@ button:hover {
 
 .vote-area {
   padding-top: 10px;
+}
+
+.description-title {
+  font-size: 12px;
+  font-style: italic;
 }
 
 </style>

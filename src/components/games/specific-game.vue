@@ -11,11 +11,16 @@
           {{capitalizeFirstLetter(game.title)}}
         </div><br><br>
 
+        <span class="description-title">Description:</span>
         <div class="post-description">
           {{ game.description }}
-        </div>
-      </div>
+        </div><br>
 
+        <span class="description-title">Developer: </span>{{game.developer_name}}<br>
+        <span class="description-title">Publisher: </span>{{game.publisher_name}}<br>
+        <span class="description-title">Release Date: </span>{{game.release_date}}
+
+      </div>
 
       <div v-else style="padding-left: 10px">
           <h3>This is the {{this.$route.params.id}} forum.. Welcome!</h3>
@@ -42,7 +47,6 @@
     <div>
         <post-object v-for="post in posts" :post="post" :key="post.id" class="post-container row"></post-object>
     </div>
-
 
   </div>
 
@@ -178,16 +182,31 @@
     created() {
 
         // Load specific game, with all its posts.
+      if (this.$route.params.id % 1 === 0) {
+
         this.$http.get('http://localhost/gameforumApi/game/specific?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
           .then(function (response) {
 
-            if (this.$route.params.id % 1 === 0) this.game = response.body.game;
+            console.log(response);
+//            if (this.$route.params.id % 1 === 0) this.game = response.body.game;
+            this.game = response.body.game;
+            this.posts = response.body.posts;
+
+//          console.log(response);
+        });
+      }
+      else {
+        this.$http.get('http://localhost/gameforumApi/game/' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+          .then(function (response) {
+
+            console.log(response);
             this.posts = response.body.posts;
 
 //          console.log(response);
           });
       }
 
+    }
   }
 </script>
 <style>

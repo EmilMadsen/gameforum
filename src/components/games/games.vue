@@ -5,6 +5,8 @@
 
     <nav-bar></nav-bar>
 
+    token: {{token}}
+
 
     <general-forums :standardForums="standardForums"></general-forums>
 
@@ -43,28 +45,27 @@ export default {
     }
   },
 
+  computed: {
+      token() {
+          return localStorage.getItem("token");
+      },
+  },
 
   created() {
 
-//    console.log("TOKEN:");
-//    console.log(localStorage.getItem("token"));
-
-//      this.$http.get('https://jsonplaceholder.typicode.com/posts').then(function(response){
-//          var games = response.body;
-//          for (var i = 0; i < games.length; i++){
-//              games[i].postCount = Math.floor(Math.random() * 1000) + 1;
-//              games[i].src = "Hearthstone-285x380.jpg";
-//          }
-//          this.games = games;
-//      });
+    console.log("Games - frontpage created");
 
       this.$http.get('http://localhost/gameforumApi/game/frontpage', {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
         .then(function (response) {
 
-          this.games = response.body.games;
-          this.standardForums = response.body.standard;
+          console.log(response);
 
-//          console.log(response);
+          this.games = response.body;
+
+        }).catch(function (response) {
+
+          console.log(response);
+          alert(response);
 
       });
 

@@ -7,15 +7,16 @@
     <div class="description-box">
 
         <div class="post-title">
-          Post Title
+          {{post.title}}
         </div><br><br>
 
+        <span class="description-title">Description:</span>
         <div class="post-description">
-          Post Description... Awesome!
+          {{post.description}}
         </div><br>
 
 
-      <span class="span-info"><b>Author:</b> Bob squash -- <b>Posted:</b> 2017/11/09 14:23</span>
+      <span class="span-info"><b>Posted by:</b> {{post.author}} -- <b></b> {{post.created_date}}</span>
 
     </div>
 
@@ -117,12 +118,9 @@
 
             console.log(response);
 
-            var tempCommentObject = {
-              id: 313,
-              body: this.comment,
-            }
+              // Push the response.comment into the array.. perhaps in front?
+              // this.comments.push(tempCommentObject);
 
-            this.comments.push(tempCommentObject);
             this.comment = null;
           });
       },
@@ -131,25 +129,13 @@
     mounted() {
 
       // load specific "post" from route params
-      this.$http.get('https://jsonplaceholder.typicode.com/posts/' + 1)
+      this.$http.get('http://localhost/gameforumApi/post/specific?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
         .then(function(response){
 
-          this.post = response.body;
+          console.log(response);
 
-        });
-//      // load specific "post" from route params
-//      this.$http.get('https://jsonplaceholder.typicode.com/posts/' + this.$route.params.id)
-//        .then(function(response){
-//
-//          this.post = response.body;
-//
-//        });
-
-      // load comments - TODO: add post id to get its comments
-      this.$http.get('https://jsonplaceholder.typicode.com/posts')
-        .then(function(response){
-
-          this.comments = response.body;
+          this.post = response.body.post;
+          this.comments = response.body.comments;
 
         });
     }

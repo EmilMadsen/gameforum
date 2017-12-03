@@ -5,9 +5,6 @@
 
       <!-- ICON && TITLE -->
       <div class="col-sm-4 column-content">
-        <!--<div class="font-style">-->
-        <!--<i class="fa fa-tasks"></i>-->
-        <!--</div>-->
         <div>
           <h4>{{ truncateLine(post.title, 35) }}</h4>
           <h6>{{ truncateLine(post.description, 35) }}</h6>
@@ -16,21 +13,25 @@
 
       <!-- COMMENT COUNT -->
       <div class="col-sm-2 column-content">
-        <span>{{post.commentCount}} comments</span> <br>
-        <span>created 22 days ago</span>
+        <span>{{post.comment_count}} comments</span> <br>
+        <span>{{post.created_date}}</span> <br>
+        <span>Author: <b>{{post.author}}</b></span>
       </div>
 
       <!-- LATEST COMMENT -->
-      <div class="col-sm-5 column-content">
-        <span><b>latest comment by email@meme.com</b></span><br>
-        <span style="font-style: italic">{{truncateLine("Why is this game so bad? Back in my days games were not supposed to be bad right out of the box", 85) }}</span>
+      <div v-if="post.last_comment" class="col-sm-5 column-content">
+        <span><b>Latest comment by {{post.last_comment_author}}:</b></span><br>
+        <span style="font-style: italic">{{truncateLine(post.last_comment, 85) }}</span>
+      </div>
+      <div v-else class="col-sm-5 column-content">
+        <span>No comments yet...</span>
       </div>
 
       <!-- UP & DOWNVOTES -->
       <div class="col-sm-1 column-content">
         <div class="post-vote-area">
           <i v-on:click.prevent="upvote()" class="fa fa-thumbs-o-up" aria-hidden="true"></i><br>
-          1332<br>
+          {{post.rating}}<br>
           <i @click="downvote()" class="fa fa-thumbs-o-down" aria-hidden="true"></i>
         </div>
       </div>
@@ -66,6 +67,7 @@
 
       truncateLine(existingInput, length)
       {
+        if (existingInput == null) return "";
         if (existingInput.length < length ) return existingInput;
         return existingInput.substring(0,length) + '..';
       },

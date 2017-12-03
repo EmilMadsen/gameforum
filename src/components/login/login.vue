@@ -127,11 +127,11 @@
 
 <style>
 
-  body {
-    font-family: Arial;
-    background-color: #3c98e5;
-    padding: 50px;
-  }
+  /*body {*/
+    /*font-family: Arial;*/
+    /*background-color: #3c98e5;*/
+    /*padding: 50px;*/
+  /*}*/
 
   * {
     box-sizing: border-box;
