@@ -101,7 +101,7 @@
 
       isGame()
       {
-        return this.$route.params.id % 1 === 0;
+        return this.routeParams % 1 === 0;
       },
 
       showCreateButton()
@@ -109,6 +109,11 @@
           if (this.isGame) return true;
           return false;
 //            return (this.$route.params.id === 'general' || this.$route.params.id === 'random')
+      },
+
+      routeParams()
+      {
+          return this.$route.params.id;
       }
 
 
@@ -176,35 +181,51 @@
             this.postObject.title = null;
             this.postObject.description = null;
         });
+      },
+
+      loadData()
+      {
+        // Load specific game, with all its posts.
+        if (this.$route.params.id % 1 === 0) {
+
+          this.$http.get('http://localhost/gameforumApi/game/specific?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+            .then(function (response) {
+
+              console.log(response);
+//            if (this.$route.params.id % 1 === 0) this.game = response.body.game;
+              this.game = response.body.game;
+              this.posts = response.body.posts;
+
+//          console.log(response);
+            });
+        }
+        else {
+          this.$http.get('http://localhost/gameforumApi/post/' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+            .then(function (response) {
+
+              console.log("Standard posts response:");
+              console.log(response);
+              this.posts = response.body;
+
+//          console.log(response);
+            });
+        }
       }
+    },
+
+    watch: {
+
+      // Trigger new data load, if the route params change..
+      routeParams()
+      {
+        this.loadData();
+      }
+
     },
 
     created() {
 
-        // Load specific game, with all its posts.
-      if (this.$route.params.id % 1 === 0) {
-
-        this.$http.get('http://localhost/gameforumApi/game/specific?id=' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
-          .then(function (response) {
-
-            console.log(response);
-//            if (this.$route.params.id % 1 === 0) this.game = response.body.game;
-            this.game = response.body.game;
-            this.posts = response.body.posts;
-
-//          console.log(response);
-        });
-      }
-      else {
-        this.$http.get('http://localhost/gameforumApi/game/' + this.$route.params.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
-          .then(function (response) {
-
-            console.log(response);
-            this.posts = response.body.posts;
-
-//          console.log(response);
-          });
-      }
+      this.loadData();
 
     }
   }

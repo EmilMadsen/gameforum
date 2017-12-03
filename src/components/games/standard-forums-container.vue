@@ -39,7 +39,7 @@
         standardForums: {
           0:  {'title': 'General', 'type': 'general'},
           1:  {'title': 'Random', 'type': 'random'},
-          2:  {'title': 'Newest', 'type': 'news'},
+          2:  {'title': 'Newest', 'type': 'newest'},
           3:  {'title': 'Hottest', 'type': 'hot'},
           4:  {'title': 'Rising', 'type': 'rising'},
           5:  {'title': 'Top Voted', 'type': 'topvoted'},

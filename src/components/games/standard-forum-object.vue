@@ -58,7 +58,7 @@
 
         isActivated(type)
         {
-            return (type === "news" || type === "topvoted");
+            return (type === "newest" || type === "topvoted");
         },
     },
 

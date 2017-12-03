@@ -1,6 +1,6 @@
 <template>
 
-  <div class="post-highligting post-entry">
+  <div class="post-entry" :class="{'post-highligting': post.author_role}">
     <router-link :to="{ name: 'post', params: { id : post.id }}">
 
       <!-- ICON && TITLE -->
