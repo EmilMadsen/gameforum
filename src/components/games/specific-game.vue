@@ -165,19 +165,17 @@
 
       postPost()
       {
-        this.$http.post('http://localhost/gameforumApi/post/create', this.postObject, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+
+        var tempPostObject = {
+          game_id: this.game.id,
+          title: this.postObject.title,
+          content: this.postObject.description
+        };
+
+        this.$http.post('http://localhost/gameforumApi/post/create', tempPostObject, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
           .then(function (response) {
 
-            console.log(response);
-
-            var tempPostObject = {
-              commentCount: 0,
-              id: 313,
-              title: this.postObject.title,
-              description: this.postObject.description
-            }
-
-            this.posts.push(tempPostObject);
+            this.posts.push(response.body[0]);
             this.postObject.title = null;
             this.postObject.description = null;
         });

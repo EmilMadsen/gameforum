@@ -13,9 +13,9 @@
     <!-- Upvote / Downvote -->
     <div class="col-sm-1 column-content">
       <div class="vote-area center-text">
-        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i><br>
+        <i @click="upvote" class="fa fa-thumbs-o-up" :class="{'fa-thumbs-up': isUpvoted}" aria-hidden="true"></i><br>
         {{comment.rating}}<br>
-        <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+        <i @click="downvote" class="fa fa-thumbs-o-down" :class="{'fa-thumbs-down': isDownvoted}" aria-hidden="true"></i>
       </div>
     </div>
   </div>
@@ -33,6 +33,41 @@
 
       },
     },
+
+    computed: {
+
+        isUpvoted()
+        {
+            return this.comment.vote_value === "1"
+        },
+
+        isDownvoted()
+        {
+          return this.comment.vote_value === "0"
+        },
+    },
+
+    methods: {
+
+      upvote()
+      {
+        this.$http.get('http://localhost/gameforumApi/comment/upvote?id=' + this.comment.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+          .then(function (response) {
+            // Set comment = reponse to update vote buttons.
+            this.comment = response.body[0];
+          });
+      },
+
+      downvote()
+      {
+        this.$http.get('http://localhost/gameforumApi/comment/downvote?id=' + this.comment.id, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+          .then(function (response) {
+            // Set comment = reponse to update vote buttons.
+            this.comment = response.body[0];
+          });
+      }
+
+    }
 
   }
 </script>

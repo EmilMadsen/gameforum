@@ -126,15 +126,17 @@
 
       postComment()
       {
-        this.$http.post('http://localhost/gameforumApi/comment/create', this.comment, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
+
+        var commentObject = {
+            post_id: this.post.id,
+            content: this.comment
+        };
+
+        this.$http.post('http://localhost/gameforumApi/comment/create', commentObject, {headers: {'Authorization': 'Token=' + localStorage.getItem("token")}})
           .then(function (response) {
 
-            console.log(response);
-
-              // Push the response.comment into the array.. perhaps in front?
-              // this.comments.push(tempCommentObject);
-
-            this.comment = null;
+              this.comments.push(response.body[0]);
+              this.comment = null;
           });
       },
     },
