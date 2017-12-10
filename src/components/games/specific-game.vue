@@ -4,7 +4,7 @@
 
     <nav-bar></nav-bar>
 
-    <div v-if="contentLoading" class="loader">
+    <div v-if="isloading" class="loader">
 
       <span style="margin: 0 auto; display: table;"><b>Loading...</b></span>
 
@@ -94,6 +94,11 @@
     },
 
     computed: {
+
+      isloading()
+      {
+          return this.contentLoading;
+      },
 
       imageSrc()
       {
@@ -197,6 +202,7 @@
 
       loadData()
       {
+        this.contentLoading = true;
         // Load specific game, with all its posts.
         if (this.$route.params.id % 1 === 0) {
 
@@ -233,6 +239,7 @@
       // Trigger new data load, if the route params change..
       routeParams()
       {
+        console.log("Watched Loading!");
         this.loadData();
       }
 
