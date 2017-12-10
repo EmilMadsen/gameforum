@@ -4,48 +4,62 @@
 
     <nav-bar></nav-bar>
 
-    <div class="description-box">
+    <div v-if="contentLoading" class="loader">
 
-      <div v-if="isGame">
-        <div class="post-title">
-          {{capitalizeFirstLetter(game.title)}}
-        </div><br><br>
+      <span style="margin: 0 auto; display: table;"><b>Loading...</b></span>
 
-        <span class="description-title">Description:</span>
-        <div class="post-description">
-          {{ game.description }}
-        </div><br>
+          <img style="display: block; margin: 0 auto; width: 10%;" src="../../assets/loader.svg">
+      <div class="clearfix"></div>
 
-        <span class="description-title">Developer: </span>{{game.developer_name}}<br>
-        <span class="description-title">Publisher: </span>{{game.publisher_name}}<br>
-        <span class="description-title">Release Date: </span>{{game.release_date}}
-
-      </div>
-
-      <div v-else style="padding-left: 10px">
-          <h3>This is the {{this.$route.params.id}} forum.. Welcome!</h3>
-          <h4>This is a standard forum.</h4>
-          <h4>You can only post new content within the game forums.</h4>
-      </div>
+      <span style="margin: 0 auto; display: table; font-style: italic">Constructing Additional Pylons... </span>
 
     </div>
 
-    <button v-if="isGame" :disabled="favoriteLoading" @click="toggleFavorite">{{favoriteButtonText}}</button><br><br>
+    <div v-else>
+        <div class="description-box">
 
-    <div v-if="showCreateButton">
-      <button @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
-      <div v-if="showCreatePost">
-        <input class="create-post-title" placeholder="Post Title" v-model="postObject.title"/><br>
-        <textarea rows="4" cols="50" name="comment" placeholder="Enter post description here..." v-model="postObject.description"></textarea><br>
-        <button @click="postPost">Submit</button><br><br>
-      </div>
-    </div>
+          <div v-if="isGame">
+            <span class="description-title">Title:</span><br>
+            <div class="post-title">
+              {{capitalizeFirstLetter(game.title)}}
+            </div><br><br>
+
+            <span class="description-title">Description:</span>
+            <div class="post-description">
+              {{ game.description }}
+            </div><br>
+
+            <span class="description-title">Developer: </span>{{game.developer_name}}<br>
+            <span class="description-title">Publisher: </span>{{game.publisher_name}}<br>
+            <span class="description-title">Release Date: </span>{{game.release_date}}
+
+          </div>
+
+          <div v-else style="padding-left: 10px">
+              <h3>This is the {{this.$route.params.id}} forum.. Welcome!</h3>
+              <h4>This is a standard forum.</h4>
+              <h4>You can only post new content within the game forums.</h4>
+          </div>
+
+        </div>
+
+        <button v-if="isGame" :disabled="favoriteLoading" @click="toggleFavorite">{{favoriteButtonText}}</button><br><br>
+
+        <div v-if="showCreateButton">
+          <button @click="toggleShowCreatePost">{{hidePostButtonTxt}}</button><br><br>
+          <div v-if="showCreatePost">
+            <input class="create-post-title" placeholder="Post Title" v-model="postObject.title"/><br>
+            <textarea rows="4" cols="50" name="comment" placeholder="Enter post description here..." v-model="postObject.description"></textarea><br>
+            <button @click="postPost">Submit</button><br><br>
+          </div>
+        </div>
 
 
-    <h5 style="margin-left: 10px; font-style: italic">Posts:</h5>
+        <h5 style="margin-left: 10px; font-style: italic">Posts sorted by date:</h5>
 
-    <div>
-        <post-object v-for="post in posts" :post="post" :key="post.id" class="post-container row"></post-object>
+        <div>
+            <post-object v-for="post in posts" :post="post" :key="post.id" class="post-container row"></post-object>
+        </div>
     </div>
 
   </div>
@@ -66,6 +80,7 @@
     data () {
       return {
         favoriteLoading: false,
+        contentLoading: true,
         posts: [],
         game: {},
         showCreatePost: false,
@@ -128,7 +143,6 @@
 
       toggleFavorite()
       {
-        console.log("t");
           // to disable button, while loading..
           this.favoriteLoading = true;
 
@@ -193,6 +207,7 @@
 //            if (this.$route.params.id % 1 === 0) this.game = response.body.game;
               this.game = response.body.game;
               this.posts = response.body.posts;
+              this.contentLoading = false;
 
 //          console.log(response);
             });
@@ -203,7 +218,9 @@
 
               console.log("Standard posts response:");
               console.log(response);
+              this.game.loading = "done"; // minor hack, to stop the loading..
               this.posts = response.body;
+              this.contentLoading = false;
 
 //          console.log(response);
             });

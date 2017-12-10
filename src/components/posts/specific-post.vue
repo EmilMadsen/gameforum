@@ -4,41 +4,61 @@
 
     <nav-bar></nav-bar>
 
-    <div class="description-box">
+    <!-- IF LOADING -->
+    <div v-if="contentLoading" class="loader">
 
-        <div class="post-title">
-          {{post.title}}
-        </div><br><br>
+      <span style="margin: 0 auto; display: table;"><b>Loading...</b></span>
 
-        <span class="description-title">Description:</span>
-        <div class="post-description">
-          {{post.description}}
-        </div><br>
+      <img style="display: block; margin: 0 auto; width: 10%;" src="../../assets/loader.svg">
+      <div class="clearfix"></div>
 
-
-      <span class="span-info"><b>Posted by:</b> {{post.author}} -- <b></b> {{post.created_date}}</span>
+      <span style="margin: 0 auto; display: table; font-style: italic">Constructing Additional Pylons...</span>
 
     </div>
 
-    <button :disabled="favoriteLoading" @click="toggleFavorite">{{favoriteButtonText}}</button>
-
-    <br>
-    <br>
-
-    <button @click="toggleShowWriteComment">{{hideCommentButtonTxt}}</button><br><br>
-    <div v-if="showWriteComment">
-      <textarea v-model="comment" rows="4" cols="50" name="comment" placeholder="Enter comment here..."></textarea><br>
-      <button  @click="postComment">Comment</button><br>
-      <br>
-    </div>
-
-    <h5 style="margin-left: 10px; font-style: italic">Comments:</h5>
-    <div v-if="comments.length > 0">
-      <comment-object class="post-container container" v-for="comment in comments" :comment="comment" :key="comment.id"></comment-object>
-    </div>
+    <!-- ELSE SHOW CONTENT -->
     <div v-else>
-      ...No comments yet
+
+          <div class="description-box">
+
+            <span class="description-title">Title:</span><br>
+            <div class="post-title">
+              {{post.title}}
+            </div><br><br>
+
+            <span class="description-title">Description:</span>
+            <div class="post-description">
+              {{post.description}}
+            </div><br>
+
+
+            <span class="span-info"><b>Posted by:</b> {{post.author}} -- <b></b> {{post.created_date}}</span>
+
+          </div>
+
+          <button :disabled="favoriteLoading" @click="toggleFavorite">{{favoriteButtonText}}</button>
+
+          <br>
+          <br>
+
+          <button @click="toggleShowWriteComment">{{hideCommentButtonTxt}}</button><br><br>
+          <div v-if="showWriteComment">
+            <textarea v-model="comment" rows="4" cols="50" name="comment" placeholder="Enter comment here..."></textarea><br>
+            <button  @click="postComment">Comment</button><br>
+            <br>
+          </div>
+
+          <h5 style="margin-left: 10px; font-style: italic">Comments sorted by date:</h5>
+          <div v-if="comments.length > 0">
+            <comment-object class="post-container container" v-for="comment in comments" :comment="comment" :key="comment.id"></comment-object>
+          </div>
+          <div v-else>
+            ...No comments yet
+          </div>
+
     </div>
+
+
 
 
   </div>
@@ -64,6 +84,7 @@
         showWriteComment: false,
         hideCommentButtonTxt: 'Write Comment',
         comment: null,
+        contentLoading:  true,
       }
     },
 
@@ -151,6 +172,7 @@
 
           this.post = response.body.post;
           this.comments = response.body.comments;
+          this.contentLoading = false;
 
         });
     }

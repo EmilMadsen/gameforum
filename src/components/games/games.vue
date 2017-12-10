@@ -5,7 +5,7 @@
 
     <nav-bar></nav-bar>
 
-    token: {{token}}
+    <span style="color: #ebebeb;">token: {{token}}</span>
 
 
     <general-forums :standardForums="standardForums"></general-forums>
@@ -13,9 +13,20 @@
     <div class="clearfix">
       <hr>
       <h4>Games:</h4>
-      <div class="row">
-        <game-object v-for="game in games" :game="game" :key="game.id"></game-object>
 
+      <div v-if="contentLoading" class="loader">
+
+        <span style="margin: 0 auto; display: table;"><b>Loading...</b></span>
+
+        <img style="display: block; margin: 0 auto; width: 10%;" src="../../assets/loader.svg">
+        <div class="clearfix"></div>
+
+        <span style="margin: 0 auto; display: table; font-style: italic">Constructing Additional Pylons...</span>
+
+      </div>
+
+      <div v-else class="row">
+        <game-object v-for="game in games" :game="game" :key="game.id"></game-object>
       </div>
     </div>
 
@@ -41,7 +52,8 @@ export default {
 
     return {
       games: {},
-      standardForums: []
+      standardForums: [],
+      contentLoading: true,
     }
   },
 
@@ -61,6 +73,7 @@ export default {
           console.log(response);
 
           this.games = response.body;
+          this.contentLoading = false;
 
         }).catch(function (response) {
 
