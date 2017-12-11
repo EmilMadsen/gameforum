@@ -70,7 +70,7 @@ img {
 .post-title {
   display: inline-block;
   font-size: 18px;
-  border: solid;
+  /*border: solid;*/
   padding: 10px;
     border-width: 1px;
 }
@@ -78,7 +78,7 @@ img {
 .post-description {
   display: table;
   font-size: 12px;
-  border: solid;
+  /*border: solid;*/
   padding: 10px;
   border-width: 1px;
 }

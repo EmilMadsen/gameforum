@@ -7,7 +7,7 @@
       </div>
       <div class="forum-object-description">
         <span>{{ truncateLine(game.title, 20) }}</span> <br>
-        <span class="sub-text">{{ game.post_count + ' ' + this.postCountText }}</span>
+        <span class="sub-text">{{ game.post_count + ' ' + this.postCountText + ' - ' + game.rating + ' rating' }}</span>
       </div>
     </div>
   </router-link>

@@ -129,7 +129,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 
   /*body {*/
     /*font-family: Arial;*/
