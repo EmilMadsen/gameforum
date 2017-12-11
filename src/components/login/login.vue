@@ -39,7 +39,7 @@
             <input v-model="userObject.password" type="password" class="login-field" value="" placeholder="password">
           </div>
 
-          <button @click="login" class="btn btn-primary btn-large btn-block">login</button>
+          <button @click="register" class="btn btn-primary btn-large btn-block">login</button>
           <a class="login-link" @click="toggleShowLoginForm">Already a user? Register here</a>
         </div>
       </div>
